@@ -34,14 +34,14 @@ namespace test_col
 }
 DECLARE_SOA_TABLE(Test_table, "AOD", "Blabla",
                   test_col::Eta, test_col::Phi, test_col::Pt);
-}
+
 
 struct myExampleTask {
   // Histogram registry: an object to hold your histograms
   HistogramRegistry histos{"histos", {}, OutputObjHandlingPolicy::AnalysisObject};
   Configurable<int> nBinsPt{"nBinsPt", 100, "N bins in pT histo"};
 
-  Produces<aod::Test_table> test_col;
+  Produces<aod::Test_table> TestTable;
 
   void init(InitContext const&)
   {
@@ -60,7 +60,7 @@ struct myExampleTask {
       histos.fill(HIST("etaHistogram"), track.eta());
       histos.fill(HIST("pTHistogram"), track.pt());
 
-      test_col(track.eta(),track.phi(),track.pt());
+      TestTable(track.eta(),track.phi(),track.pt());
     }
   }
 };
